@@ -1,4 +1,6 @@
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
 import javax.swing.JOptionPane;
 
 /*
@@ -208,7 +210,20 @@ public class FormRegisto extends javax.swing.JFrame {
         String telefone = ctxTelefone.getText();
         String pass = ctxPassword.getText();
         String rePass = ctxRePassword.getText();
-        mensagemErro("teste");
+        if (nome.equals("") || email.equals("") || morada.equals("") || telefone.equals("") || nif.equals("") || pass.equals("")
+                || rePass.equals("")){
+            mensagemErro("Preencha todos os campos");
+        }else{
+            if(!validaCampoNumerico(telefone)){
+                mensagemErro ("O campo telefone tem "+" de ser numérico e ter 9 digitos");   
+            }
+            if(!validaCampoNumerico(nif)){
+                mensagemErro ("O campo nif tem "+" de ser numérico e ter 9 digitos");   
+            }
+            if(!validaCampoNum(nome)){
+                mensagemErro ("O campo nome tem "+" de ter 2 caracteres");    
+            }
+        }
         // nome >= 2 carateres
         // email tem que 1@ e 1. apos @
         // morada tem que ter >5 carateres
@@ -272,4 +287,42 @@ public class FormRegisto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
-}
+
+    private boolean validaCampoNumerico(String telefone) {
+        int x,contador = 0,t = telefone.length();
+        char c;
+        if(t !=9)
+            return false;
+        else{
+            for (x = 0; x<t; x++){
+                c = telefone.charAt(x);
+                if (isDigit(c))
+                    contador++; 
+            }
+            if (t!=contador)
+                return false;
+        }
+        return true;
+    }
+
+    private boolean validaCampoNum(String nome) {
+        int x, contador = 0, n = nome.length();
+        char c = 0;
+        if (n!=2)
+            return false;
+        else{
+            for (x = 0; x<n; x++){
+                c = nome.charAt(c);
+                if (isLetter(c))
+                    contador++;
+            }
+            if (n!=contador)
+                return false;
+        }
+        return true;
+    }
+          }
+
+ 
+
+ 
