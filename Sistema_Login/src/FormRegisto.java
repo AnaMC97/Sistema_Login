@@ -229,10 +229,16 @@ public class FormRegisto extends javax.swing.JFrame {
             if(!validaCampoEmail(email)){
                 mensagemErro ("O campo email tem "+" de ter 1 . e 1 @");
             }
+            if (!validaCampoPass(pass)){
+                mensagemErro ("O campo Pass tem "+" de ter 8+ carateres, 1+min, 1+mai, 1+caracteres, 1+algarismo");
+            }
+            if (!validaCampoRePass(rePass)){
+                mensagemErro ("Este tem "+" de ser igual ao anterior");
+            }
         }
         // email tem que 1@ e 1. apos @
         //pass e repass tem de ser igual
-        // pass tem que ter 8 ou mais caracters, 1+ m 1+algs, 1+M,1+@
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -342,13 +348,31 @@ public class FormRegisto extends javax.swing.JFrame {
     }
 
     private boolean validaCampoEmail(String email) {
-       int c = 0 ,  e = email.length() ;
         
         if (email.indexOf('@') >-1 && email.indexOf('.') >-1)
             return true;
         else
             return false;
     }
-}
+    // falta negar um segundo @
   
- 
+    private boolean validaCampoPass(String pass) {
+        int x = 0, al = 1, min = 1, mai = 1,cara = 0,  p = pass.length();
+        char c = 0;
+        String special_C = "~`!@#$%^&*()-_=+\\|[{]};:'\",<.>/?"; 
+        
+       // for (x = 0; x < p; x++)
+        //c = pass.charAt(x)
+        if (p < 8 && p< 20){
+            return false;
+        }
+        if (p < al && p < mai && p < min ){
+             return false;
+        }
+        if (special_C.contains(String.valueOf(c))){
+            cara--;
+            return false;
+        }
+            return true;
+    }
+}
