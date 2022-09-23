@@ -230,10 +230,11 @@ public class FormRegisto extends javax.swing.JFrame {
                 mensagemErro ("O campo email tem "+" de ter 1 . e 1 @");
             }
             if (!validaCampoPass(pass)){
-                mensagemErro ("O campo Pass tem "+" de ter 8+ carateres, 1+min, 1+mai, 1+caracteres, 1+algarismo");
+                mensagemErro ("O campo pass tem "+" de ter 8+ carateres, 1+min, 1+mai, 1+caracteres, 1+algarismo");
             }
-            if (!validaCampoRePass(rePass)){
-                mensagemErro ("Este tem "+" de ser igual ao anterior");
+            if (!pass.equals(rePass)){
+                mensagemErro ("Este campo tem "+" de ser igual ao anterior");
+                
             }
         }
         // email tem que 1@ e 1. apos @
@@ -357,22 +358,33 @@ public class FormRegisto extends javax.swing.JFrame {
     // falta negar um segundo @
   
     private boolean validaCampoPass(String pass) {
-        int x = 0, al = 1, min = 1, mai = 1,cara = 0,  p = pass.length();
-        char c = 0;
-        String special_C = "~`!@#$%^&*()-_=+\\|[{]};:'\",<.>/?"; 
-        
-       // for (x = 0; x < p; x++)
-        //c = pass.charAt(x)
-        if (p < 8 && p< 20){
+        int x = 0, p = pass.length();
+        int mai = 0;
+        int min = 0;
+        int num = 0;
+        int sc = 0;
+        if (p < 8)
             return false;
-        }
-        if (p < al && p < mai && p < min ){
-             return false;
-        }
-        if (special_C.contains(String.valueOf(c))){
-            cara--;
-            return false;
-        }
-            return true;
+        for (x = 0; x < p; x++){
+            char c = pass.charAt(x);
+            if (c == ' ')
+                return false;
+            if (Character.isDigit(c)){
+                num++;
+            }
+            if (Character.isUpperCase(c)){
+                mai++;
+            }
+            if (Character.isLowerCase(c)){
+                min++;
+            }
+            if (!isDigit(c) && !isLetter(c))
+                sc++;
+    
+         }
+    if (min > 0 && mai> 0 && sc > 0 && num > 0)
+        return true;
+    else
+         return false;
     }
 }
