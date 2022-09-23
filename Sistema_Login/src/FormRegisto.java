@@ -221,14 +221,16 @@ public class FormRegisto extends javax.swing.JFrame {
                 mensagemErro ("O campo nif tem "+" de ser numérico e ter 9 digitos");   
             }
             if(!validaCampoNum(nome)){
-                mensagemErro ("O campo nome tem "+" de ter 2 caracteres");    
+                mensagemErro ("O campo nome tem "+" de ter no minimo 2 caracteres");    
+            }
+            if(!validaCampoMorada(morada)){
+                mensagemErro ("O campo morada tem "+" de ter no minimo 5 caracteres");
+            }
+            if(!validaCampoEmail(email)){
+                mensagemErro ("O campo email tem "+" de ter 1 . e 1 @");
             }
         }
-        // nome >= 2 carateres
         // email tem que 1@ e 1. apos @
-        // morada tem que ter >5 carateres
-        // telefone 9 caracteres que sejam digitos
-        // nif 9 caracteres que sejam digitos
         //pass e repass tem de ser igual
         // pass tem que ter 8 ou mais caracters, 1+ m 1+algs, 1+M,1+@
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -308,11 +310,11 @@ public class FormRegisto extends javax.swing.JFrame {
     private boolean validaCampoNum(String nome) {
         int x, contador = 0, n = nome.length();
         char c = 0;
-        if (n!=2)
+        if (n <2)
             return false;
         else{
             for (x = 0; x<n; x++){
-                c = nome.charAt(c);
+                c = nome.charAt(x);
                 if (isLetter(c))
                     contador++;
             }
@@ -321,8 +323,32 @@ public class FormRegisto extends javax.swing.JFrame {
         }
         return true;
     }
-          }
 
- 
+    private boolean validaCampoMorada(String morada) {
+        int x, contador = 0, m = morada.length();
+        char c = 0;
+        if (m <5)
+            return false;
+        else{
+            for (x = 0; x<m; x++){
+                c = morada.charAt(x);
+                if (isLetter(c))
+                    contador++;
+            }
+            if (m!=contador)
+                return false;
+        }
+        return true;
+    }
 
+    private boolean validaCampoEmail(String email) {
+       int c = 0 ,  e = email.length() ;
+        
+        if (email.indexOf('@') >-1 && email.indexOf('.') >-1)
+            return true;
+        else
+            return false;
+    }
+}
+  
  
