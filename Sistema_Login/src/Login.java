@@ -1,9 +1,19 @@
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    public static String log;
+    static String nome;
     public Login() {
         initComponents();
     }
@@ -44,6 +54,11 @@ public class Login extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Iniciar Sessão");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         ctxPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +132,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ctxLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxLoginActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_ctxLoginActionPerformed
 
     private void ctxPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxPasswordActionPerformed
@@ -130,6 +145,63 @@ public class Login extends javax.swing.JFrame {
         fr.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        /*Validação através da recolha e compração de password e login //
+        1º Verificar se existe ficheiro "login.txt"
+        2ºVerificar se a password corresponde à pass que está no ficheiro se sim, segue para a JFrame Form MenuOpçoes*/
+        //Se login e password corretos faz isto que se segue 
+        //2 variveis login e pass
+        
+                 String  pass;
+        log = ctxLogin.getText();
+        pass = ctxPassword.getText();
+       
+        if (log.equals("") || pass.equals("")){
+             JOptionPane.showMessageDialog(null, "Preencha os dados de login", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        //login = new (login+".txt");
+        else{
+            
+            File ficheiro = new File (log+".txt");
+            if(!ficheiro.exists()){
+               JOptionPane.showMessageDialog(null, "Dados Incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+            }else{
+                FileReader fr;
+                try {
+                    fr = new FileReader(ficheiro);
+                    BufferedReader br = new BufferedReader(fr);
+                    while (br.ready()){
+                        String linha = br.readLine();
+                        if (pass.equals(linha)){
+                            MenuOpcoes mo = new MenuOpcoes();
+                            mo.setVisible(true);
+                            this.dispose();
+                            break;
+                        }
+                        else{
+                           JOptionPane.showMessageDialog(null, "Dados Incorretos", "Erro", JOptionPane.ERROR_MESSAGE); 
+                        break;
+                        }
+                    }
+                    br.close();
+                    fr.close();
+                    
+                    
+                    
+                    
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            }
+        } 
+    
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+        
+        
    
     public static void main(String args[]) {
 
