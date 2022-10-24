@@ -14,6 +14,7 @@ public class Login extends javax.swing.JFrame {
 
     public static String log;
     static String nome;
+    static String login;
     public Login() {
         initComponents();
     }

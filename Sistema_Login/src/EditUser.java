@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,10 +29,12 @@ public class EditUser extends javax.swing.JFrame {
 
     /**
      * Creates new form EditUser
+     * @throws java.io.IOException
      */
-    public EditUser() throws IOException {
+    public EditUser() throws IOException, SQLException {
         initComponents();
-        preencheFormulario();
+        //preencheFormulario();
+        preencheViaBD();
     }
 
     /**
@@ -58,6 +63,8 @@ public class EditUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         ctxRePassword = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        ctxLogin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +118,21 @@ public class EditUser extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Password");
 
+        ctxRePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ctxRePasswordActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("Login");
+
+        ctxLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ctxLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,6 +147,15 @@ public class EditUser extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ctxPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                                    .addComponent(ctxRePassword)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -140,19 +171,13 @@ public class EditUser extends javax.swing.JFrame {
                                 .addGap(101, 101, 101)
                                 .addComponent(ctxTelefone))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(119, 119, 119)
-                                .addComponent(ctxNome))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ctxPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                    .addComponent(ctxRePassword))))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel9))
+                                .addGap(119, 119, 119)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ctxNome)
+                                    .addComponent(ctxLogin))))
                         .addGap(45, 45, 45)))
                 .addContainerGap())
         );
@@ -161,15 +186,19 @@ public class EditUser extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel7)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(ctxRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ctxPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(ctxPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(ctxRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(ctxLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(ctxNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -191,7 +220,7 @@ public class EditUser extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(ctxTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel8))
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -282,6 +311,14 @@ public class EditUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void ctxRePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxRePasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ctxRePasswordActionPerformed
+
+    private void ctxLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ctxLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,6 +353,8 @@ public class EditUser extends javax.swing.JFrame {
                     new EditUser().setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -323,6 +362,7 @@ public class EditUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ctxEmail;
+    private javax.swing.JTextField ctxLogin;
     private javax.swing.JTextField ctxMorada;
     private javax.swing.JTextField ctxNif;
     private javax.swing.JTextField ctxNome;
@@ -339,6 +379,7 @@ public class EditUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 
     
@@ -435,8 +476,7 @@ public class EditUser extends javax.swing.JFrame {
     }
     
     private void preencheFormulario() throws IOException {
-     //File utilizadores = new File("C:\\Users\\AnaCoelho\\Desktop\\Projeto_Java\\Sistema_Login\\Sistema_Login");
-        //File [] lista = utilizadores.listFiles();
+        
         int cont = 0;
         String[] lista = new String[8];
       
@@ -449,11 +489,11 @@ public class EditUser extends javax.swing.JFrame {
             ctxPassword.setText(lista[0]);
             ctxRePassword.setText(lista[1]);
             ctxNome.setText(lista[2]);
-            //ctxLogin.setText(lista[2]);
-            ctxEmail.setText(lista[3]);
-            ctxMorada.setText(lista[4]);
-            ctxNif.setText(lista[5]);
-            ctxTelefone.setText(lista[6]);
+            ctxLogin.setText(lista[3]);
+            ctxEmail.setText(lista[4]);
+            ctxMorada.setText(lista[5]);
+            ctxNif.setText(lista[6]);
+            ctxTelefone.setText(lista[7]);
         }
             
         } catch (FileNotFoundException ex) {
@@ -464,4 +504,25 @@ public class EditUser extends javax.swing.JFrame {
     
     
     }
+
+    private void preencheViaBD() throws SQLException {
+        java.sql.Connection c = LigaBD.ligacao();
+        String sql = "SELECT * FROM utilizador WHERE login = '"+Login.log+"'";
+        PreparedStatement ps = c.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        System.out.println("Log "+Login.log);
+        while(rs.next()){
+            System.out.println("entrei");
+            ctxNome.setText(rs.getString(2));
+            ctxEmail.setText(rs.getString(3));
+            ctxMorada.setText(rs.getString(4));
+            ctxTelefone.setText(""+rs.getInt(5));
+            ctxNif.setText(""+rs.getInt(6));
+            ctxLogin.setText(rs.getString(7));
+            ctxPassword.setText(rs.getString(8));
+            ctxRePassword.setText(rs.getString(8));
+
+            
+        }
+        }
 }
