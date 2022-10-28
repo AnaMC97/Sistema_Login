@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -97,7 +95,7 @@ public class EditUser extends javax.swing.JFrame {
         jLabel2.setText("Email");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel7.setText("Edição de dados do Utilizador");
+        jLabel7.setText("           Edição de dados do Utilizador");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Morada");
@@ -147,7 +145,6 @@ public class EditUser extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -177,16 +174,17 @@ public class EditUser extends javax.swing.JFrame {
                                 .addGap(119, 119, 119)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ctxNome)
-                                    .addComponent(ctxLogin))))
+                                    .addComponent(ctxLogin)))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
                         .addGap(45, 45, 45)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(ctxPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -307,7 +305,11 @@ public class EditUser extends javax.swing.JFrame {
             } catch (IOException ex){
                 ex.printStackTrace();
             }
-
+            try {
+                LigaBD.atualizaUtilizador(nome, email, morada, telefone, nif, pass);
+            } catch (SQLException ex) {
+                Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -521,8 +523,8 @@ public class EditUser extends javax.swing.JFrame {
             ctxLogin.setText(rs.getString(7));
             ctxPassword.setText(rs.getString(8));
             ctxRePassword.setText(rs.getString(8));
+        }
 
-            
         }
-        }
+        
 }

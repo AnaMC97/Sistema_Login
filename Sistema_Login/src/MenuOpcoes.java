@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -134,13 +135,17 @@ public class MenuOpcoes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        File utilizadores = new File("C:\\Users\\AnaCoelho\\Desktop\\Projeto_Java\\Sistema_Login\\Sistema_Login");
+        /*File utilizadores = new File("C:\\Users\\AnaCoelho\\Desktop\\Projeto_Java\\Sistema_Login\\Sistema_Login");
         File [] lista = utilizadores.listFiles();
         System.out.println(">>> Lista de Utilizadores <<<");
         for (int x = 0; x < lista.length;x++){
             if (lista[x].getName().endsWith(".txt"))
                 System.out.println(lista[x].getName().replace(".txt", ""));
-        }
+        }*/
+        LoginTable lt = new LoginTable();
+        this.setVisible(false);
+        lt.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ctxVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxVisualizarActionPerformed
