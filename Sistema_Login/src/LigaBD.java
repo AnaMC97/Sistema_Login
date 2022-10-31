@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -66,5 +65,17 @@ public class LigaBD {
         }else{
             System.out.println("Não foi possível alterar os registros!");
         } 
+    }
+
+    static void remove(int p) {
+        /*String r = Integer.parseInt("DELETE FROM utilizador WHERE login="'+log+'");*/
+                
+        try {
+            PreparedStatement ps=null;
+            Connection conexao = LigaBD.ligacao();
+            ps = conexao.prepareStatement("DELETE FROM utilizador WHERE idUtilizador =" +p);
+            ps.executeUpdate();
+            System.out.println("Removed User :" + Login.log);
+        } catch (SQLException e) {System.out.println("Error: " + e.getMessage()); }
     }
 }

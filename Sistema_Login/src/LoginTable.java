@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.Connection;
 import static javax.swing.UIManager.getInt;
 import static javax.swing.UIManager.getString;
@@ -7,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -38,15 +40,20 @@ public class LoginTable extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        ctxMostrar = new javax.swing.JButton();
+        ctxEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
+        jTable1.setForeground(new java.awt.Color(255, 153, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "Nome", "Email", "Morada", "Telefone", "Nif", "Login", "Pass"
+                "Id", "Nome", "Email", "Morada", "Telefone", "Nif", "Login", "Pass"
             }
         ) {
             Class[] types = new Class [] {
@@ -59,25 +66,108 @@ public class LoginTable extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        ctxMostrar.setBackground(new java.awt.Color(0, 0, 0));
+        ctxMostrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ctxMostrar.setForeground(new java.awt.Color(255, 153, 153));
+        ctxMostrar.setText("Editar");
+        ctxMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ctxMostrarActionPerformed(evt);
+            }
+        });
+
+        ctxEliminar.setBackground(new java.awt.Color(0, 0, 0));
+        ctxEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ctxEliminar.setForeground(new java.awt.Color(255, 153, 153));
+        ctxEliminar.setText("Eliminar");
+        ctxEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ctxEliminarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 153, 153));
+        jButton1.setText("Sair");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(ctxEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(ctxMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ctxMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ctxEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ctxEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxEliminarActionPerformed
+      DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
+            int i =JOptionPane.showConfirmDialog(null,"Pretende Remover", "Tem a Certeza?", JOptionPane.YES_NO_OPTION);
+            if(i==JOptionPane.YES_OPTION){
+             int p = (int)jTable1.getValueAt(jTable1.getSelectedRow(),0);
+             LigaBD.remove(p);
+
+            }
+            preencheTabela();
+    }//GEN-LAST:event_ctxEliminarActionPerformed
+
+    private void ctxMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctxMostrarActionPerformed
+        LigaBD.ligacao();
+        EditUser eu = null;
+        try {
+            eu = new EditUser();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuOpcoes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuOpcoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            eu = new EditUser ();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuOpcoes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuOpcoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       this.dispose();
+       eu.setVisible(true);
+    }//GEN-LAST:event_ctxMostrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MenuOpcoes me = new MenuOpcoes();
+        this.dispose(); //fecha a janela atual
+        me.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +205,9 @@ public class LoginTable extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ctxEliminar;
+    private javax.swing.JButton ctxMostrar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

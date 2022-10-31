@@ -237,9 +237,9 @@ public class EditUser extends javax.swing.JFrame {
     }//GEN-LAST:event_ctxNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Login log = new Login();
+        MenuOpcoes me = new MenuOpcoes();
         this.dispose(); //fecha a janela atual
-        log.setVisible(true);
+        me.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
